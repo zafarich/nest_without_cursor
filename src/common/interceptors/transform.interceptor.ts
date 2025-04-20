@@ -19,6 +19,8 @@ export class TransformInterceptor<T>
     return next.handle().pipe(
       map((response) => {
         // Agar response allaqachon IApiResponse formatida bo'lsa
+        console.log('response', response);
+
         if (response?.hasOwnProperty('success')) {
           return response;
         }

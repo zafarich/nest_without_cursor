@@ -4,8 +4,8 @@ import {
   PrimaryGeneratedColumn,
   CreateDateColumn,
   UpdateDateColumn,
-  ManyToOne,
-  JoinColumn,
+  ManyToMany,
+  JoinTable,
 } from 'typeorm';
 import { Gender } from '@common/enums/gender.enum';
 import { EmploymentType } from '@common/enums/employment-type.enum';
@@ -17,22 +17,24 @@ export class User {
   id: number;
 
   @Column()
-  first_name: string;
+  firstName: string;
 
   @Column()
-  last_name: string;
+  lastName: string;
 
   @Column({
     nullable: true,
   })
-  middle_name: string;
+  middleName: string;
 
   @Column({
     unique: true,
   })
   phone: string;
 
-  @Column()
+  @Column({
+    select: false,
+  })
   password: string;
 
   @Column({
@@ -50,25 +52,25 @@ export class User {
   @Column({
     nullable: true,
   })
-  passport_series: string;
+  passportSeries: string;
 
   @Column({
     nullable: true,
   })
-  passport_number: string;
+  passportNumber: string;
 
   @Column({
     type: 'date',
     nullable: true,
   })
-  date_of_birth: Date;
+  dateOfBirth: Date;
 
   @Column({
     type: 'enum',
     enum: EmploymentType,
     nullable: false,
   })
-  employment_type: EmploymentType;
+  employmentType: EmploymentType;
 
   @Column({
     type: 'decimal',
@@ -76,7 +78,7 @@ export class User {
     scale: 2,
     nullable: true,
   })
-  hourly_rate: number;
+  hourlyRate: number;
 
   @Column({
     type: 'decimal',
@@ -84,35 +86,42 @@ export class User {
     scale: 2,
     nullable: true,
   })
-  monthly_salary: number;
+  monthlySalary: number;
 
   @Column({
     default: true,
   })
-  is_active: boolean;
+  isActive: boolean;
 
   @Column({
     nullable: true,
   })
   comment: string;
 
-  @ManyToOne(() => Role, (role) => role.users, {
-    nullable: false,
-    eager: false,
+  @ManyToMany(() => Role, (role) => role.users)
+  @JoinTable({
+    name: 'user_roles',
+    joinColumn: {
+      name: 'user_id',
+      referencedColumnName: 'id',
+    },
+    inverseJoinColumn: {
+      name: 'role_id',
+      referencedColumnName: 'id',
+    },
   })
-  @JoinColumn({ name: 'role_id' })
-  role: Role;
+  roles: Role[];
 
   @CreateDateColumn({
     type: 'timestamp',
     default: () => 'CURRENT_TIMESTAMP(6)',
   })
-  created_at: Date;
+  createdAt: Date;
 
   @UpdateDateColumn({
     type: 'timestamp',
     default: () => 'CURRENT_TIMESTAMP(6)',
     onUpdate: 'CURRENT_TIMESTAMP(6)',
   })
-  updated_at: Date;
+  updatedAt: Date;
 }

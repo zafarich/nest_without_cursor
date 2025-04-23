@@ -10,10 +10,7 @@ import { APP_FILTER, APP_INTERCEPTOR } from '@nestjs/core';
 import { HttpExceptionFilter } from '@common/filters/http-exception.filter';
 import { TransformInterceptor } from '@common/interceptors/transform.interceptor';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { UserModule } from './modules/user/user.module';
-import { RoleModule } from './modules/role/role.module';
-import { RoleModule } from './modules/role.module';
-import typeOrmConfig from './config/typeorm.config';
+import { typeOrmAsyncConfig } from '@config/typeorm.config';
 
 @Module({
   imports: [
@@ -27,11 +24,9 @@ import typeOrmConfig from './config/typeorm.config';
         abortEarly: false,
       },
     }),
-    TypeOrmModule.forRootAsync({
-      useFactory: typeOrmConfig,
-    }),
-    UserModule,
-    RoleModule,
+
+    TypeOrmModule.forRootAsync(typeOrmAsyncConfig),
+
     WinstonModule.forRoot(loggerConfig),
   ],
   controllers: [AppController],

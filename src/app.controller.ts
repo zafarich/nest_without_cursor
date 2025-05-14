@@ -24,9 +24,4 @@ export class AppController {
   async findAll() {
     return [22];
   }
-
-  @Get(':id')
-  findOne(@Param() params: any) {
-    return params?.id;
-  }
 }

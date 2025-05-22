@@ -16,6 +16,9 @@ import { AuthModule } from './modules/auth/auth.module';
 import { CategoriesModule } from './modules/categories/categories.module';
 import { RolesModule } from '@/modules/roles/roles.module';
 
+import { ServeStaticModule } from '@nestjs/serve-static';
+import { join } from 'path';
+
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -27,6 +30,10 @@ import { RolesModule } from '@/modules/roles/roles.module';
         allowUnknown: true,
         abortEarly: false,
       },
+    }),
+
+    ServeStaticModule.forRoot({
+      rootPath: join(process.cwd(), 'public'),
     }),
 
     TypeOrmModule.forRootAsync(typeOrmAsyncConfig),

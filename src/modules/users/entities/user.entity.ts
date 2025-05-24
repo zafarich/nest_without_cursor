@@ -9,7 +9,7 @@ import {
 } from 'typeorm';
 import { Employee } from '@modules/employees/entities/employee.entity';
 import { Role } from '@modules/roles/entities/role.entity';
-
+import { Superuser } from '@modules/superusers/entities/superuser.entity';
 @Entity('users')
 export class User {
   @PrimaryGeneratedColumn()
@@ -22,19 +22,11 @@ export class User {
   lastName: string;
 
   @Column({
-    nullable: true,
-    default: '',
-  })
-  middleName: string;
-
-  @Column({
     unique: true,
   })
   phone: string;
 
-  @Column({
-    select: false,
-  })
+  @Column({ nullable: true })
   password: string;
 
   @OneToOne(() => Employee, (employee) => employee.user)
@@ -42,6 +34,9 @@ export class User {
 
   @ManyToMany(() => Role, (role) => role.users)
   roles: Role[];
+
+  @OneToOne(() => Superuser, (superuser) => superuser.user)
+  superuser: Superuser;
 
   @CreateDateColumn({
     type: 'timestamp',

@@ -32,9 +32,9 @@ import { join } from 'path';
       },
     }),
 
-    ServeStaticModule.forRoot({
-      rootPath: join(process.cwd(), 'public'),
-    }),
+    // ServeStaticModule.forRoot({
+    //   rootPath: join(process.cwd(), 'public'),
+    // }),
 
     TypeOrmModule.forRootAsync(typeOrmAsyncConfig),
 

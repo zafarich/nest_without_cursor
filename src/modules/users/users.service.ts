@@ -2,7 +2,9 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository, DeepPartial } from 'typeorm';
 import { User } from './entities/user.entity';
-
+import { CreateUserDto } from './dto/create-user.dto';
+import * as bcrypt from 'bcrypt';
+import { IUser } from './interfaces/user.interface';
 @Injectable()
 export class UsersService {
   constructor(
@@ -10,10 +12,15 @@ export class UsersService {
     private usersRepository: Repository<User>,
   ) {}
 
-  async create(createUserDto: DeepPartial<User>): Promise<User> {
-    const user = this.usersRepository.create(createUserDto);
+  async create(createUserDto: CreateUserDto): Promise<IUser> {
+    const hashedPassword = await bcrypt.hash(createUserDto.password, 10);
+    const user = this.usersRepository.create({
+      ...createUserDto,
+      password: hashedPassword,
+    });
     const savedUser = await this.usersRepository.save(user);
-    return savedUser;
+    const { password, ...result } = savedUser;
+    return result;
   }
 
   async findByPhone(phone: string): Promise<User | undefined> {

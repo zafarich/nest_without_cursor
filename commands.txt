@@ -1,0 +1,8 @@
+Migration create:
+npm run migration:create -- src/database/migrations/CustomMigration
+
+Migration generate:
+npm run migration:generate -- src/database/migrations/MigratsiyaNomi
+
+Migration run:
+npm run migration:run

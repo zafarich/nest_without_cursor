@@ -8,23 +8,12 @@ import {
 } from 'typeorm';
 import { User } from '@/modules/users/entities/user.entity';
 @Entity('superusers')
-export class Superusers {
+export class Superuser {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column()
-  firstName: string;
-
-  @Column()
-  lastName: string;
-
   @OneToOne(() => User, (user) => user.employee)
   user: User;
-
-  @Column({
-    nullable: true,
-  })
-  image: string;
 
   @Column({
     nullable: true,

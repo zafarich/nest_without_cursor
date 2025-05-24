@@ -20,11 +20,10 @@ export const typeOrmAsyncConfig: TypeOrmModuleAsyncOptions = {
       password: configService.get<string>('DATABASE_PASSWORD'),
       database: configService.get<string>('DATABASE_NAME'),
       entities: [__dirname + '/../**/*.entity.{js,ts}'],
-      migrations: [__dirname + '/../database/migrations/*{.ts,.js}'],
-
+      migrations: [__dirname + '/../database/migrations/*.ts'],
       migrationsRun: true,
-      synchronize: configService.get<string>('NODE_ENV') !== 'production',
-      logging: configService.get<string>('NODE_ENV') !== 'production',
+      synchronize: false,
+      logging: false,
       namingStrategy: new SnakeNamingStrategy(),
 
       // ssl: configService.get<string>('NODE_ENV') === 'production'

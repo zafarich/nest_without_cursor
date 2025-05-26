@@ -5,8 +5,10 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   ManyToMany,
+  ManyToOne,
 } from 'typeorm';
 import { Role } from '@modules/roles/entities/role.entity';
+import { PermissionGroup } from './permission-group.entity';
 @Entity('permissions')
 export class Permission {
   @PrimaryGeneratedColumn()
@@ -20,6 +22,9 @@ export class Permission {
 
   @ManyToMany(() => Role, (role) => role.permissions)
   roles: Role[];
+
+  @ManyToOne(() => PermissionGroup, (group) => group.permissions)
+  group: PermissionGroup;
 
   @CreateDateColumn({
     type: 'timestamp',

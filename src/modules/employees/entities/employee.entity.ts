@@ -29,6 +29,7 @@ export class Employee {
   middleName: string;
 
   @OneToOne(() => User, (user) => user.employee)
+  @JoinColumn()
   user: User;
 
   @ManyToOne(() => Company, (company) => company.employees)

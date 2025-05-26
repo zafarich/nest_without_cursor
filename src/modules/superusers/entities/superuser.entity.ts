@@ -5,6 +5,7 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   OneToOne,
+  JoinColumn,
 } from 'typeorm';
 import { User } from '@/modules/users/entities/user.entity';
 @Entity('superusers')
@@ -13,6 +14,7 @@ export class Superuser {
   id: number;
 
   @OneToOne(() => User, (user) => user.employee)
+  @JoinColumn()
   user: User;
 
   @Column({

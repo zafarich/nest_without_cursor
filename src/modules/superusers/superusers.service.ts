@@ -15,7 +15,6 @@ export class SuperusersService {
   ) {}
 
   async create(createSuperuserDto: CreateSuperuserDto) {
-    // Avval user yaratamiz
     const createUserDto: CreateUserDto = {
       first_name: createSuperuserDto.first_name,
       last_name: createSuperuserDto.last_name,
@@ -26,12 +25,12 @@ export class SuperusersService {
     const user = await this.usersService.create(createUserDto);
 
     // Keyin superuser yaratamiz
-    const superuser = this.superusersRepository.create({
-      first_name: createSuperuserDto.first_name,
-      last_name: createSuperuserDto.last_name,
-      user,
-    });
+    // const superuser = this.superusersRepository.create({
+    //   first_name: createSuperuserDto.first_name,
+    //   last_name: createSuperuserDto.last_name,
+    //   user,
+    // });
 
-    return this.superusersRepository.save(superuser);
+    // return this.superusersRepository.save(superuser);
   }
 }

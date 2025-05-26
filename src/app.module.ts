@@ -4,6 +4,7 @@ import { AppController } from '@/app.controller';
 import { AppService } from '@/app.service';
 import { environmentValidationSchema } from '@common/validations/global';
 import configuration from '@config/configuration';
+import { dataSourceOptions } from '@database/data-source';
 import { WinstonModule } from 'nest-winston';
 import { loggerConfig } from '@config/logger.config';
 import { APP_FILTER, APP_INTERCEPTOR } from '@nestjs/core';
@@ -37,6 +38,8 @@ import { join } from 'path';
     // }),
 
     TypeOrmModule.forRootAsync(typeOrmAsyncConfig),
+
+    TypeOrmModule.forRoot(dataSourceOptions),
 
     WinstonModule.forRoot(loggerConfig),
 

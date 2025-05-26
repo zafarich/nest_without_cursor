@@ -8,6 +8,8 @@ export class SuperusersController {
 
   @Post('create')
   create(@Body() createSuperuserDto: CreateSuperuserDto) {
+    console.log('body', createSuperuserDto);
+    // return 'Hello';
     return this.superusersService.create(createSuperuserDto);
   }
 }

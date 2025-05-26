@@ -9,11 +9,6 @@ import { Role } from '../users/enums/role.enum';
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
-  @Post('register')
-  async register(@Body() registerDto: any) {
-    return this.authService.register(registerDto);
-  }
-
   @Post('login')
   async login(@Body() loginDto: any) {
     const user = await this.authService.validateUser(

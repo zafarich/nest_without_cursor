@@ -22,7 +22,7 @@ export const typeOrmAsyncConfig: TypeOrmModuleAsyncOptions = {
       entities: [__dirname + '/../**/*.entity.{js,ts}'],
       migrations: [__dirname + '/../database/migrations/*.ts'],
       migrationsRun: true,
-      synchronize: false,
+      synchronize: true,
       logging: false,
       namingStrategy: new SnakeNamingStrategy(),
 

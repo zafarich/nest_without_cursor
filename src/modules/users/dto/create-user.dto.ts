@@ -11,6 +11,10 @@ export class CreateUserDto {
 
   @IsString()
   @IsNotEmpty()
+  role: string;
+
+  @IsString()
+  @IsNotEmpty()
   @Length(12, 12, {
     message: "Telefon raqam uzunligi 12 ta belgi bo'lishi kerak",
   })

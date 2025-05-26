@@ -32,11 +32,11 @@ export class User {
   @OneToOne(() => Employee, (employee) => employee.user)
   employee: Employee;
 
-  @ManyToMany(() => Role, (role) => role.users)
-  roles: Role[];
-
   @OneToOne(() => Superuser, (superuser) => superuser.user)
   superuser: Superuser;
+
+  @ManyToMany(() => Role, (role) => role.users)
+  roles: Role[];
 
   @CreateDateColumn({
     type: 'timestamp',

@@ -13,7 +13,7 @@ export class Superuser {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @OneToOne(() => User, (user) => user.employee)
+  @OneToOne(() => User, (user) => user.superuser)
   @JoinColumn()
   user: User;
 

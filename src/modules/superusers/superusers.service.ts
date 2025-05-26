@@ -20,17 +20,17 @@ export class SuperusersService {
       last_name: createSuperuserDto.last_name,
       phone: createSuperuserDto.phone,
       password: createSuperuserDto.password,
+      role: createSuperuserDto.role,
     };
 
     const user = await this.usersService.create(createUserDto);
 
     // Keyin superuser yaratamiz
-    // const superuser = this.superusersRepository.create({
-    //   first_name: createSuperuserDto.first_name,
-    //   last_name: createSuperuserDto.last_name,
-    //   user,
-    // });
+    const superuser = this.superusersRepository.create({
+      user: user,
+      isActive: createSuperuserDto.is_active,
+    });
 
-    // return this.superusersRepository.save(superuser);
+    return this.superusersRepository.save(superuser);
   }
 }

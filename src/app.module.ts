@@ -16,6 +16,7 @@ import { UsersModule } from './modules/users/users.module';
 import { AuthModule } from './modules/auth/auth.module';
 import { CategoriesModule } from './modules/categories/categories.module';
 import { RolesModule } from '@/modules/roles/roles.module';
+import { SuperusersModule } from '@/modules/superusers/superusers.module';
 
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
@@ -50,6 +51,8 @@ import { join } from 'path';
     CategoriesModule,
 
     RolesModule,
+
+    SuperusersModule,
   ],
   controllers: [AppController],
   providers: [

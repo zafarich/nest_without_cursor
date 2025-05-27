@@ -1,8 +1,8 @@
 import { IsString, IsNotEmpty, Length, Matches } from 'class-validator';
 
 export class CreateUserDto {
-  @IsString()
   @IsNotEmpty()
+  @IsString()
   first_name: string;
 
   @IsString()

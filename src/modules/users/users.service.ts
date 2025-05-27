@@ -1,4 +1,4 @@
-import { Injectable, BadRequestException } from '@nestjs/common';
+import { Injectable, UnprocessableEntityException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository, DeepPartial } from 'typeorm';
 import { User } from './entities/user.entity';
@@ -20,12 +20,11 @@ export class UsersService {
       where: { name: createUserDto.role },
     });
 
-    console.log('role', role);
-
-    // if (!role) {
-    //   console.log('Role not found');
-    //   return new BadRequestException('Role not found');
-    // }
+    if (!role) {
+      throw new UnprocessableEntityException(
+        'You have entered an invalid role',
+      );
+    }
 
     const hashedPassword = await bcrypt.hash(createUserDto.password, 10);
     const user = this.usersRepository.create({

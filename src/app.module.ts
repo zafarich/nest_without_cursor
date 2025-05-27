@@ -1,4 +1,8 @@
-import { Module } from '@nestjs/common';
+import {
+  Module,
+  UnprocessableEntityException,
+  ValidationPipe,
+} from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { AppController } from '@/app.controller';
 import { AppService } from '@/app.service';
@@ -7,7 +11,7 @@ import configuration from '@config/configuration';
 import { dataSourceOptions } from '@database/data-source';
 import { WinstonModule } from 'nest-winston';
 import { loggerConfig } from '@config/logger.config';
-import { APP_FILTER, APP_INTERCEPTOR } from '@nestjs/core';
+import { APP_FILTER, APP_INTERCEPTOR, APP_PIPE } from '@nestjs/core';
 import { HttpExceptionFilter } from '@common/filters/http-exception.filter';
 import { TransformInterceptor } from '@common/interceptors/transform.interceptor';
 import { TypeOrmModule } from '@nestjs/typeorm';
@@ -57,10 +61,28 @@ import { join } from 'path';
   controllers: [AppController],
   providers: [
     AppService,
-    // {
-    //   provide: APP_FILTER,
-    //   useClass: HttpExceptionFilter,
-    // },
+    {
+      provide: APP_FILTER,
+      useClass: HttpExceptionFilter,
+    },
+    {
+      provide: APP_PIPE,
+      useValue: new ValidationPipe({
+        whitelist: true,
+        forbidNonWhitelisted: true,
+        transform: true,
+        exceptionFactory: (errors) => {
+          const formattedErrors = errors.map((error: any) => ({
+            field: error.property,
+            message: Object.values(error.constraints).join(', '),
+          }));
+
+          console.log('formattedErrors', formattedErrors);
+
+          return new UnprocessableEntityException(formattedErrors);
+        },
+      }),
+    },
     // {
     //   provide: APP_INTERCEPTOR,
     //   useClass: TransformInterceptor,

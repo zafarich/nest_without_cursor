@@ -14,7 +14,7 @@ export class Superuser {
   id: number;
 
   @OneToOne(() => User, (user) => user.superuser)
-  @JoinColumn()
+  @JoinColumn({ name: 'user_id' })
   user: User;
 
   @Column({

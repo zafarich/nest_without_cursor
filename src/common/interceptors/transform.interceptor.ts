@@ -22,7 +22,6 @@ export class TransformInterceptor<T>
           return response;
         }
 
-        // Oddiy response uchun
         return {
           success: true,
           error_code: null,
